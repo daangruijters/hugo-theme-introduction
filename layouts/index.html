@@ -23,9 +23,11 @@
             <div class="container has-text-centered">
 
                 <!-- Logo -->
-                {{ with .Site.Params.logo }}
-                    <img class="is-shadowless is-radiusless" src="{{ . | relURL }}" alt="Pallium logo" style="border: none !important; width:200px">
-                {{ end }}
+                <div class="{{ if or (.Site.Params.fadeIn | default true) .Site.Params.fadeInIndex }}fade-in one{{ end }}">
+                    {{ with .Site.Params.logo }}
+                        <img class="is-shadowless is-radiusless" src="{{ . | relURL }}" alt="Pallium logo" style="border: none !important; width:200px">
+                    {{ end }}
+                </div>
 
                 <!-- Title and tagline -->
                 <h1
