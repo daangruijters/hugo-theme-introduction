@@ -61,7 +61,7 @@
         {{ end }}
 
         {{ range sort $pages "Params.weight" }}
-            {{ if ne .Name "contact.md" }}
+            {{ if (and (ne .Name "footer.md") (ne .Name "contact.md")) }}
                 {{ if .File }}
                     {{ if eq (os.Stat .File.Dir).Name "projects" }}
                         <!-- Now for some cool projects -->
@@ -113,32 +113,50 @@
                 {{ end }}
             {{ end }}
         {{ end }}
-        <!-- Let`s chat, shall we? -->
+
+        <!-- Contact -->
         {{ with .Resources.GetMatch "contact.md" }}
-        <div class="section" id="{{ .File.TranslationBaseName }}">
-            <div class="container has-text-centered">
-                <h2 class="title is-2">{{ .Title | markdownify }}</h2>
-                <div class="markdown">
-                    {{ .Content }}
+            <div class="section" id="{{ .File.TranslationBaseName }}">
+                <div class="container has-text-centered">
+                    <h2 class="title is-2">{{ .Title | markdownify }}</h2>
+                    <div class="markdown">
+                        {{ .Content }}
+                    </div>
+
+                    {{ if .Site.Params.home.localTime }}
+                        <p>{{ i18n "index_currentTime" . }} <span id="time"></span>.</p>
+                    {{ end }}
+
+                    {{ with .Site.Params.email }}
+                        <h3 class="subtitle is-3 has-text-centered top-pad">
+                            <a href="mailto:{{ . }}">{{ . }}</a>
+                        </h3>
+                    {{ end }}
+
+                    {{ partial "home/social.html" . }}
                 </div>
-                {{ if .Site.Params.home.localTime }}
-                <p>{{ i18n "index_currentTime" . }} <span id="time"></span>.</p>
-                {{ end }}
-                {{ with .Site.Params.email }}
-                <h3 class="subtitle is-3 has-text-centered top-pad">
-                    <a href="mailto:{{ . }}">{{ . }}</a>
-                </h3>
-                {{ end }}
-                {{ partial "home/social.html" . }}
+
+                <!-- End Contact container -->
+                {{ partial "top-icon.html" . }}
+
             </div>
-            <!-- End Contact container -->
-            {{ partial "top-icon.html" . }}
-        </div>
-        <div class="container">
-            <hr>
-        </div>
+            <div class="container">
+                <hr>
+            </div>
         {{ end }}
-    <!-- End Contact section -->
+
+        <!-- Footer -->
+        {{ with .Resources.GetMatch "footer.md" }}
+            <div class="section" id="{{ .File.TranslationBaseName }}">
+                <div class="container has-text-centered">
+                    <h2 class="title is-2">{{ .Title | markdownify }}</h2>
+                    <div class="markdown">
+                        {{ .Content }}
+                    </div>
+                </div>
+            </div>
+        {{ end }}
+
     {{ end }}
 
     {{ partial "footer/text.html" . }}
