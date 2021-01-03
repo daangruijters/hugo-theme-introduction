@@ -21,6 +21,12 @@
         <!-- Super sweet Hero body title -->
         <div class="hero-body">
             <div class="container has-text-centered">
+
+                <!-- Logo -->
+                {{ with .Site.Params.logo }}
+                    <img class="is-shadowless is-radiusless" src="{{ . | relURL }}" alt="Pallium logo" style="border: none !important; width:200px">
+                {{ end }}
+
                 <!-- Title and tagline -->
                 <h1
                     class="bold-title {{ if or (.Site.Params.fadeIn | default true) .Site.Params.fadeInIndex }}fade-in one{{ end }}">
@@ -30,13 +36,13 @@
                     class="subtitle is-3 {{ if or (.Site.Params.fadeIn | default true) .Site.Params.fadeInIndex }}fade-in two{{ end }}">
                     {{ .Content }}
                 </div>
-                <!-- End title and tagline -->
+
                 <!-- Some social icons -->
                 <div
                     class="{{ if or (.Site.Params.fadeIn | default true) .Site.Params.fadeInIndex }}fade-in three{{ end }}">
                     {{ partial "home/social.html" . }}
                 </div>
-                <!-- End top social icons -->
+                
             </div>
         </div> <!-- End of Hero body -->
         {{ end }}
